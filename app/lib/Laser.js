@@ -2,23 +2,22 @@
 
 var createSubClass = require('./util/create_subclass')
     , collisionService = require('./collisions')
-    , Container = createjs.Container;
+    , Actor = require('./abstract/Actor');
 
 var BULLET_SPEED = 35
     , BULLET_LIFE_TIME = 20;
 
-module.exports = createSubClass(Container, 'Laser', {
+module.exports = createSubClass(Actor, 'Laser', {
     initialize: Laser$initialize,
-    destroy: Laser$destroy
+    tick: Laser$tick,
+    collision: Laser$tick
 });
 
 
 function Laser$initialize(x, y, rotation) {
-    Container.prototype.initialize.apply(this, arguments);
+    Actor.prototype.initialize.apply(this, arguments);
     
     this.name = 'laser';
-    this.x = x;
-    this.y = y;
     this.rotation = rotation;
 
     this.body = new createjs.Bitmap('img/laser.png');
@@ -31,20 +30,10 @@ function Laser$initialize(x, y, rotation) {
     this.speedY = Math.cos((rotation) * Math.PI / -180);
 
     collisionService.addActor(this, 'point');
-    this.on('collision', onCollision);
-    this.on('tick', onTick);
 }
 
 
-function Laser$destroy() {
-    if (this.parent) {
-        collisionService.removeActor(this);
-        this.parent.removeChild(this);
-    }
-}
-
-
-function onTick(event) {
+function Laser$tick(event) {
     this.lifetime++;
     this.x -= this.speedX * BULLET_SPEED;
     this.y -= this.speedY * BULLET_SPEED;
@@ -54,7 +43,8 @@ function onTick(event) {
 }
 
 
-function onCollision(event) {
+function Laser$collision(event) {
+    Actor.prototype.collision.apply(this, event);
     var other = event.data.other;
     if (other.name != 'hero')
         this.destroy();

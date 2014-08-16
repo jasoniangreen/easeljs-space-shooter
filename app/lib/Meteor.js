@@ -3,22 +3,21 @@
 var createSubClass = require('./util/create_subclass')
     , collisionService = require('./collisions')
     , hudService = require('./hud')
+    , Actor = require('./abstract/Actor')
     , Container = createjs.Container;
 
 
-module.exports = createSubClass(Container, 'Meteor', {
+module.exports = createSubClass(Actor, 'Meteor', {
     initialize: Meteor$initialize,
-    destroy: Meteor$destroy,
-    isDestroyed: Meteor$isDestroyed
+    tick: Meteor$tick,
+    //collision: Meteor$collision
 });
 
 
 function Meteor$initialize(x, y) {
-    Container.prototype.initialize.apply(this, arguments);
+    Actor.prototype.initialize.apply(this, arguments);
     
     this.name = 'meteor';
-    this.x = x;
-    this.y = y;
     this.rotation = Math.random()*360;
     
     this.direction = Math.random()*360;
@@ -32,41 +31,25 @@ function Meteor$initialize(x, y) {
     this.addChild(this.body);
 
     collisionService.addActor(this, 'circle', {radius: 48});
-    this.on('collision', onCollision);
-    this.on('tick', onTick);
 }
 
 
-function Meteor$destroy() {
-    if (this.parent) {
-        hudService.dispatchEvent({
-            type: 'update', 
-            data: { property: 'score', value: 10}
-        });
-        collisionService.removeActor(this);
-        this.parent.removeChild(this);
-        this._destroyed = true;
-    }
-}
-
-
-function Meteor$isDestroyed() {
-    return this._destroyed;
-}
-
-
-function onTick() {
+function Meteor$tick() {
     this.x -= this.speedX * this.velocity;
     this.y -= this.speedY * this.velocity;
 }
 
 
-function onCollision(event) {
-    var other = event.data.other;
-    if (other.name == 'hero') {
-        this.destroy();
-    } else if (other.name == 'laser') {
-        //send out message to update score
-        this.destroy();
-    }
+function Meteor$collision(event) {
+    Actor.prototype.collision.apply(this, arguments);
+    //var other = event.data.other;
+    // if (other.name == 'hero') {
+    //     this.destroy();
+    // } else if (other.name == 'laser') {
+    //     hudService.dispatchEvent({
+    //         type: 'update', 
+    //         data: { property: 'score', value: 10}
+    //     });
+    //     this.destroy();
+    // }
 }

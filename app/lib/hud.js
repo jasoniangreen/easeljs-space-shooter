@@ -30,12 +30,21 @@ function hud_init(x, y) {
     hud.on('tick', onTick);
 
     this.on('update', onUpdate);
-    this.on('set', onSet);
 }
 
 
 function hud_get() {
     return hud;
+}
+
+// make update function
+function hud_set(property, value) {
+    values[property] = value;
+    texts[property]
+}
+
+function hud_update(property, value) {
+    texts[property]
 }
 
 
@@ -52,21 +61,9 @@ function onUpdate(event) {
 }
 
 
-function onSet(event) {
-    var property = event.data.property;
-    var value = event.data.value;
-
-    if (property && value) {
-        values[property] = value;
-        isDirty = true;
-    }
-}
-
-
 function onTick() {
     if (isDirty) {
         for (var key in values) {
-            console.log(key)
             if (values.hasOwnProperty(key)) {
                 var textObj = texts[key];
                 if (textObj) textObj.text = values[key];

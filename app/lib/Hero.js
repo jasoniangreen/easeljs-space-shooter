@@ -4,8 +4,8 @@ var createSubClass = require('./util/create_subclass')
     , actionService = require('./actions')
     , Laser = require('./Laser')
     , hudService = require('./hud')
-    , collisionService = require('./collisions')
-    , Container = createjs.Container;
+    , Actor = require('./abstract/Actor')
+    , collisionService = require('./collisions');
 
 var keyActions = {
     'moveleft':  { property: 'heading', value: -1 },
@@ -20,28 +20,27 @@ var SPEED = 3
     , INERTIA = 0.88
     , ROT_INERTIA = 0.8;
 
-module.exports = createSubClass(Container, 'Hero', {
+module.exports = createSubClass(Actor, 'Hero', {
     initialize: Hero$initialize,
-    takeDamage: Hero$takeDamage
+    takeDamage: Hero$takeDamage,
+    tick: Hero$tick,
+    collision: Hero$collision
 });
 
 
 function Hero$initialize(x, y) {
-    Container.prototype.initialize.apply(this, arguments);
+    Actor.prototype.initialize.apply(this, arguments);
     
     _prepareProperties.call(this, x, y);
     _prepareBody.call(this);
 
     collisionService.addActor(this, 'circle', {radius: 40});
-    this.on('tick', onTick);
-    this.on('collision', onCollision);
 }
 
 
 function Hero$takeDamage(damage) {
     this.alpha = 0.5;
     this.health -= damage;
-    console.log('Health now at: ' + this.health);
 
     var self = this;
     setTimeout(function() {
@@ -57,7 +56,7 @@ function fireWeapon(event) {
 }
 
 
-function onTick(event) {
+function Hero$tick(event) {
     this.rotation += this.vRot * ROT_SPEED; 
     this.y += this.vY;    
     this.x += this.vX;  
@@ -84,15 +83,16 @@ function onTick(event) {
 }
 
 
-function onCollision(event) {
-    var other = event.data.other;
-    if (other.name == 'meteor') {
-        this.takeDamage(20);
-        hudService.dispatchEvent({
-            type: 'set', 
-            data: { property: 'health', value: this.health}
-        });
-    }
+function Hero$collision(event) {
+    Actor.prototype.collision.apply(this, arguments);
+    // var other = event.data.other;
+    // if (other.name == 'meteor') {
+    //     this.takeDamage(20);
+    //     hudService.dispatchEvent({
+    //         type: 'update', 
+    //         data: { property: 'health', value: -20}
+    //     });
+    // }
 }
 
 
@@ -104,8 +104,6 @@ function _prepareProperties(x, y) {
     this.vRot = 0;
     this.vX = 0;
     this.vY = 0;
-    this.x = x;
-    this.y = y;
     this.lookX = 0;
     this.lookY = 0;
     this.health = 100;
