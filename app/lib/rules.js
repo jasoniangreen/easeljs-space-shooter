@@ -34,7 +34,6 @@ function transformCollisions() {
             map[self][other] = collisions[other][index];
         });
     });
-    console.log(map);
     return map;
 }
 
@@ -45,8 +44,6 @@ function destroy(data) {
         var destroyedFunc = rules.destroyed[data.self.name];
         destroyedFunc && destroyedFunc();
     }
-
-    //data.self && data.self.destory && data.self.destory();
 }
 
 
@@ -76,11 +73,11 @@ function addPoints(points) {
 
 
 function resetGame(self) {
-    console.log('resetGame');
+    console.log('resetGame to be implemented');
 }
 
 
 function apply(self) {
-    console.log('self');
+    console.log('powerups to be implemented');
 }
 
