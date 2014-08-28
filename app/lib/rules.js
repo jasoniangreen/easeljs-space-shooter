@@ -7,7 +7,8 @@ var takeDmg20 = takeDamage(20)
 
 
 var collisions = {
-    types:    [   'meteor',     'hero',    'laser',    'enemy', 'modifier' ],
+    selves:   [   'meteor',     'hero',    'laser',    'enemy', 'modifier' ],
+ /* others */
     meteor:   [           ,  takeDmg20,    destroy,           ,            ],
     hero:     [    destroy,           ,           ,  takeDmg40,    destroy ],
     laser:    [    destroy,           ,           ,  takeDmg20,            ],
@@ -27,10 +28,10 @@ var rules = module.exports = {
 
 function transformCollisions() {
     var map = {};
-    var types = collisions.types;
-    types.forEach(function (self, index) {
+    var selves = collisions.selves;
+    selves.forEach(function (self, index) {
         map[self] = {};
-        types.forEach(function (other) {
+        selves.forEach(function (other) {
             map[self][other] = collisions[other][index];
         });
     });
