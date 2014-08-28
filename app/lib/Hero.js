@@ -57,6 +57,7 @@ function fireWeapon(event) {
 
 
 function Hero$tick(event) {
+    Actor.prototype.tick.apply(this, arguments);
     this.rotation += this.vRot * ROT_SPEED; 
     this.y += this.vY;    
     this.x += this.vX;  

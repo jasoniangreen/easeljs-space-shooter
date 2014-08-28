@@ -27,8 +27,8 @@ function Actor$initialize(x, y) {
     this.x = x;
     this.y = y;
 
-    this.on('collision', this.collision.bind(this));
-    this.on('tick', this.tick.bind(this));
+    this.on('collision', this.collision);
+    this.on('tick', this.tick);
 }
 
 
@@ -56,11 +56,9 @@ function Actor$tick() {
 
 
 function Actor$collision(event) {
-    console.log(event);
     try {
-        console.log(event.data.self.name, event.data.other.name);
         var ruleFunc = rules.collisions[event.data.self.name]
                                        [event.data.other.name];
     } catch(e) {}
-    ruleFunc && ruleFunc(event.data);
+    typeof ruleFunc == 'function' && ruleFunc(event.data);
 }

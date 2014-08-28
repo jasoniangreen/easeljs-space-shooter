@@ -34,6 +34,7 @@ function Laser$initialize(x, y, rotation) {
 
 
 function Laser$tick(event) {
+    Actor.prototype.tick.apply(this, arguments);
     this.lifetime++;
     this.x -= this.speedX * BULLET_SPEED;
     this.y -= this.speedY * BULLET_SPEED;
@@ -45,7 +46,7 @@ function Laser$tick(event) {
 
 function Laser$collision(event) {
     Actor.prototype.collision.apply(this, event);
-    var other = event.data.other;
-    if (other.name != 'hero')
-        this.destroy();
+    // var other = event.data.other;
+    // if (other.name != 'hero')
+    //     this.destroy();
 }
