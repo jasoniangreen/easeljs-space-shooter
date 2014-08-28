@@ -1,7 +1,8 @@
 'use strict';
 
 var EventDispatcher = createjs.EventDispatcher
-    , EaselEvent = createjs.Event;
+    , EaselEvent = createjs.Event
+    , config = require('./config');
 
 var c = createjs;
 
@@ -10,7 +11,7 @@ var width, height, hud;
 var isDirty = false;
 var texts = {};
 var values = {
-    health: 100,
+    health: config.hero.health,
     score: 0
 };
 
@@ -29,22 +30,13 @@ function hud_init(x, y) {
     hud = createHud();
     hud.on('tick', onTick);
 
+    this.on('set', onSet);
     this.on('update', onUpdate);
 }
 
 
 function hud_get() {
     return hud;
-}
-
-// make update function
-function hud_set(property, value) {
-    values[property] = value;
-    texts[property]
-}
-
-function hud_update(property, value) {
-    texts[property]
 }
 
 
@@ -56,6 +48,19 @@ function onUpdate(event) {
 
     if (property && value) {
         values[property] += value;
+        isDirty = true;
+    }
+}
+
+
+function onSet(event) {
+    if (!event.data) return;
+
+    var property = event.data.property;
+    var value = event.data.value;
+
+    if (property && value) {
+        values[property] = value;
         isDirty = true;
     }
 }

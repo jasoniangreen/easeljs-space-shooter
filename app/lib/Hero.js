@@ -5,6 +5,7 @@ var createSubClass = require('./util/create_subclass')
     , Laser = require('./Laser')
     , hudService = require('./hud')
     , Actor = require('./abstract/Actor')
+    , config = require('./config')
     , collisionService = require('./collisions');
 
 var keyActions = {
@@ -23,8 +24,7 @@ var SPEED = 3
 module.exports = createSubClass(Actor, 'Hero', {
     initialize: Hero$initialize,
     takeDamage: Hero$takeDamage,
-    tick: Hero$tick,
-    collision: Hero$collision
+    tick: Hero$tick
 });
 
 
@@ -42,17 +42,15 @@ function Hero$takeDamage(damage) {
     this.alpha = 0.5;
     this.health -= damage;
 
+    hudService.dispatchEvent({
+        type: 'set', 
+        data: { property: 'health', value: this.health}
+    });
+
     var self = this;
     setTimeout(function() {
         self.alpha = 1;
     }, 2000);
-}
-
-
-function fireWeapon(event) {
-    var laser = new Laser(this.x, this.y, this.rotation);
-    var index = this.parent.getChildIndex(this);
-    this.parent.addChildAt(laser, index);
 }
 
 
@@ -66,7 +64,7 @@ function Hero$tick(event) {
     _processActionAnimations.call(this, actions);
 
     if (this.firing)
-        fireWeapon.call(this);
+        _fireWeapon.call(this);
 
     this.vRot += this.heading;
     this.vRot = this.vRot * ROT_INERTIA;
@@ -84,16 +82,10 @@ function Hero$tick(event) {
 }
 
 
-function Hero$collision(event) {
-    Actor.prototype.collision.apply(this, arguments);
-    // var other = event.data.other;
-    // if (other.name == 'meteor') {
-    //     this.takeDamage(20);
-    //     hudService.dispatchEvent({
-    //         type: 'update', 
-    //         data: { property: 'health', value: -20}
-    //     });
-    // }
+function _fireWeapon(event) {
+    var laser = new Laser(this.x, this.y, this.rotation);
+    var index = this.parent.getChildIndex(this);
+    this.parent.addChildAt(laser, index);
 }
 
 
@@ -107,7 +99,7 @@ function _prepareProperties(x, y) {
     this.vY = 0;
     this.lookX = 0;
     this.lookY = 0;
-    this.health = 100;
+    this.health = config.hero.health;
 }
 
 

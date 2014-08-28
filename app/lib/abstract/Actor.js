@@ -6,6 +6,8 @@ var createSubClass = require('../util/create_subclass')
     , collisionService = require('../collisions')
     , hudService = require('../hud')
     , rules = require('../rules')
+    , config = require('../config')
+    , world = config.world
     , Container = createjs.Container;
 
 
@@ -51,7 +53,10 @@ function Actor$isDestroyed() {
 
 
 function Actor$tick() {
-    // implemented in subclass
+    if (this.x > world.width) this.x = 0;
+    if (this.x < 0) this.x = world.width;
+    if (this.y > world.height) this.y = 0;
+    if (this.y < 0) this.y = world.height;
 }
 
 

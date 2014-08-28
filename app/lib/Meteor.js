@@ -10,7 +10,7 @@ var createSubClass = require('./util/create_subclass')
 module.exports = createSubClass(Actor, 'Meteor', {
     initialize: Meteor$initialize,
     tick: Meteor$tick,
-    //collision: Meteor$collision
+    destroy: Meteor$destroy
 });
 
 
@@ -35,21 +35,13 @@ function Meteor$initialize(x, y) {
 
 
 function Meteor$tick() {
+    Actor.prototype.tick.apply(this, arguments);
     this.x -= this.speedX * this.velocity;
     this.y -= this.speedY * this.velocity;
 }
 
 
-function Meteor$collision(event) {
-    Actor.prototype.collision.apply(this, arguments);
-    //var other = event.data.other;
-    // if (other.name == 'hero') {
-    //     this.destroy();
-    // } else if (other.name == 'laser') {
-    //     hudService.dispatchEvent({
-    //         type: 'update', 
-    //         data: { property: 'score', value: 10}
-    //     });
-    //     this.destroy();
-    // }
+function Meteor$destroy(event) {
+    // Do meteor specific stuff, like split in pieces.
+    Actor.prototype.destroy.apply(this, arguments);
 }

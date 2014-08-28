@@ -6,14 +6,14 @@ var domReady = require('./util').domReady
     , actionService = require('./actions')
     , levels = require('./levels')
     , hud = require('./hud')
-    , collisionService = require('./collisions');
+    , collisionService = require('./collisions')
+    , config = require('./config')
+    , wConfig = config.world;
 
 var _W = 500
     , _H = 700
     , xCentre = _W / 2
     , yCentre = _H / 2
-    , wWidth = 2000
-    , wHeight = 2000
     , currentLevel = 0
     , c = createjs
     , hero
@@ -44,9 +44,9 @@ function prepareWorld() {
     stage.addChild(world);
     stage.addChild(hud.get());
 
-    var level = levels[currentLevel+1];
-    wHeight = level.data.length * level.cellHeight;
-    wWidth = level.data[0].length * level.cellWidth;
+    var level = levels[currentLevel];
+    wConfig.height = level.data.length * level.cellHeight;
+    wConfig.width = level.data[0].length * level.cellWidth;
 
     level.data.forEach(function(row, rowIndex) {
         row.forEach(function(cell, cellIndex) {
@@ -75,20 +75,20 @@ function prepareWorld() {
 
 
 function cameraMove() {
-    if (wWidth > _W) {
-        if (hero.x < wWidth - xCentre && hero.x > xCentre)
+    if (wConfig.width > _W) {
+        if (hero.x < wConfig.width - xCentre && hero.x > xCentre)
             world.x = -hero.x + xCentre;
-        else if (hero.x >= wWidth - xCentre)
-            world.x = -(wWidth - _W);
+        else if (hero.x >= wConfig.width - xCentre)
+            world.x = -(wConfig.width - _W);
         else
             world.x = 0;
     }
 
-    if (wHeight > _H) {
-        if (hero.y < wHeight - yCentre && hero.y > yCentre)
+    if (wConfig.height > _H) {
+        if (hero.y < wConfig.height - yCentre && hero.y > yCentre)
             world.y = -hero.y + yCentre;
-        else if (hero.y >= wHeight - yCentre)
-            world.y = -(wHeight - _H);
+        else if (hero.y >= wConfig.height - yCentre)
+            world.y = -(wConfig.height - _H);
         else
             world.y = 0;
     }

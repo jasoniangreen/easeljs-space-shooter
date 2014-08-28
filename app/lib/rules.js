@@ -1,19 +1,25 @@
 'use strict';
 
+var hudService = require('./hud');
+
+var takeDmg20 = takeDamage(20)
+    , takeDmg40 = takeDamage(40);
+
+
 var collisions = {
     types:    [   'meteor',     'hero',    'laser',    'enemy', 'modifier' ],
-    meteor:   [           , takeDamage,    destroy,           ,            ],
-    hero:     [    destroy,           ,           , takeDamage,    destroy ],
-    laser:    [    destroy,           ,           , takeDamage,            ],
-    enemy:    [           , takeDamage,    destroy,           ,            ],
+    meteor:   [           ,  takeDmg20,    destroy,           ,            ],
+    hero:     [    destroy,           ,           ,  takeDmg40,    destroy ],
+    laser:    [    destroy,           ,           ,  takeDmg20,            ],
+    enemy:    [           ,  takeDmg40,    destroy,           ,            ],
     modifier: [           ,      apply,           ,           ,            ]
 };
 
-module.exports = {
+var rules = module.exports = {
     collisions: transformCollisions(),
     destroyed: {
-        meteor: addPoints,
-        enemy: addPoints,
+        meteor: addPoints(20),
+        enemy: addPoints(50),
         hero: resetGame
     }
 };
@@ -34,24 +40,38 @@ function transformCollisions() {
 
 
 function destroy(data) {
-    console.log('destroy');
+    if (data.self) {
+        data.self.destroy && data.self.destroy();
+        var destroyedFunc = rules.destroyed[data.self.name];
+        destroyedFunc && destroyedFunc();
+    }
+
     //data.self && data.self.destory && data.self.destory();
 }
 
 
-function takeDamage(data) {
-    console.log('takeDamage');
-    // //use partial to pass different vals
-    // var self = data.self;
-    // self.takeDamage && self.takeDamage(20);
-
-    // if (self.health <= 0)
-    //     self.destroy && self.destroy();
+function takeDamage(damage) {
+    return function _takeDamage(data) {
+        var self = data.self;
+        if (self) {
+            self.takeDamage && self.takeDamage(damage);
+            if (self.health <= 0) {
+                self.destroy && self.destroy();
+                var destroyedFunc = rules.destroyed[self.name];
+                destroyedFunc && destroyedFunc();
+            }
+        }
+    }
 }
 
 
-function addPoints(self) {
-    console.log('addPoints');
+function addPoints(points) {
+    return function _addPoints() {
+        hudService.dispatchEvent({
+            type: 'update', 
+            data: { property: 'score', value: points}
+        });
+    }
 }
 
 

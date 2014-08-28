@@ -42,11 +42,3 @@ function Laser$tick(event) {
     if (this.lifetime >= BULLET_LIFE_TIME)
         this.destroy();
 }
-
-
-function Laser$collision(event) {
-    Actor.prototype.collision.apply(this, event);
-    // var other = event.data.other;
-    // if (other.name != 'hero')
-    //     this.destroy();
-}
