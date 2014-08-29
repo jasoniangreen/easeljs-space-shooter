@@ -8,28 +8,31 @@ var createSubClass = require('../util/create_subclass')
     , Container = createjs.Container;
 
 
-module.exports = createSubClass(Actor, 'Meteor', {
+var Meteor = module.exports = createSubClass(Actor, 'Meteor', {
     initialize: Meteor$initialize,
     tick: Meteor$tick,
     destroy: Meteor$destroy
 });
 
 
-function Meteor$initialize(x, y) {
+function Meteor$initialize(x, y, size) {
     Actor.prototype.initialize.apply(this, arguments);
     
     this.name = 'meteor';
     this.rotation = Math.random()*360;
+    this.size = size || 2;
     
     this.direction = Math.random()*360;
     this.velocity = Math.random()*8 + 2;
     this.speedX = Math.sin((this.direction) * Math.PI / -180);
     this.speedY = Math.cos((this.direction) * Math.PI / -180);
 
-    this.body = sprites.createSprite('meteor1');
+    this.body = sprites.createSprite('meteor'+this.size);
     this.addChild(this.body);
 
-    collisionService.addActor(this, 'circle', {radius: 48});
+    try { var radius = this.body.spriteSheet.getFrame(this.body.currentFrame).regX } catch(e) {}
+
+    collisionService.addActor(this, 'circle', {radius: radius || 20});
 }
 
 
@@ -41,6 +44,12 @@ function Meteor$tick() {
 
 
 function Meteor$destroy(event) {
-    // Do meteor specific stuff, like split in pieces.
+    var newSize = this.size - 1;
+    if (newSize) {
+        var meteor1 = new Meteor(this.x, this.y, newSize);
+        this.parent.addChild(meteor1);
+        var meteor2 = new Meteor(this.x, this.y, newSize);
+        this.parent.addChild(meteor2);
+    }
     Actor.prototype.destroy.apply(this, arguments);
 }

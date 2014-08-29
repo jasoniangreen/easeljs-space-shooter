@@ -2,7 +2,7 @@ easeljs-space-shooter
 =====================
 
 A space shooter game written with the canvas framework Easel JS for a tutsplus video course.
-
+The graphics are from the "Space Shooter (Redux)" sprite package by Kenney Vleugels (www.kenney.nl).
 
 ### Install ###
 Install node and npm.

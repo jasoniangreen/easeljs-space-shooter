@@ -8,7 +8,8 @@ var sprites = module.exports = {
 	createSprite: createSprite,
 	nameMap: {
 		'hero': 'playerShip1_orange',
-		'meteor1': 'meteorBrown_big4',
+		'meteor2': 'meteorBrown_big4',
+		'meteor1': 'meteorBrown_med1',
 		'laser1': 'laserRed05'
 	}
 };

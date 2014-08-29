@@ -60,7 +60,7 @@ function Hero$tick(event) {
     _processActionAnimations.call(this, actions);
 
     if (this.firing)
-        _fireWeapon.call(this);
+        _fireWeapon.call(this); //_.throttle
 
     this.vRot += this.heading;
     this.vRot = this.vRot * ROT_INERTIA;
