@@ -1,9 +1,9 @@
 'use strict';
 
-var createSubClass = require('./util/create_subclass')
-    , collisionService = require('./collisions')
-    , sprites = require('./sprites')
-    , Actor = require('./abstract/Actor');
+var createSubClass = require('../util/create_subclass')
+    , collisionService = require('../collisions')
+    , sprites = require('../sprites')
+    , Actor = require('../abstract/Actor');
 
 var BULLET_SPEED = 35
     , BULLET_LIFE_TIME = 20;

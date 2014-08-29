@@ -1,13 +1,13 @@
 'use strict';
 
-var createSubClass = require('./util/create_subclass')
-    , actionService = require('./actions')
+var createSubClass = require('../util/create_subclass')
+    , actionService = require('../actions')
     , Laser = require('./Laser')
-    , hudService = require('./hud')
-    , Actor = require('./abstract/Actor')
-    , config = require('./config')
-    , sprites = require('./sprites')
-    , collisionService = require('./collisions');
+    , hudService = require('../hud')
+    , Actor = require('../abstract/Actor')
+    , config = require('../config')
+    , sprites = require('../sprites')
+    , collisionService = require('../collisions');
 
 var keyActions = {
     'moveleft':  { property: 'heading', value: -1 },

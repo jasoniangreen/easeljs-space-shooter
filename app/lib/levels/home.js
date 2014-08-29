@@ -1,6 +1,6 @@
 'use strict';
 
-var Hero = require('../hero');
+var Hero = require('../actors/hero');
 
 module.exports = {
     name: 'Home Base',

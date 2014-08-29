@@ -1,8 +1,7 @@
 'use strict';
 
 var domReady = require('./util').domReady
-    , Meteor = require('./Meteor')
-    , Hero = require('./Hero')
+    , Hero = require('./actors/Hero')
     , actionService = require('./actions')
     , levels = require('./levels')
     , hud = require('./hud')

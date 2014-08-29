@@ -1,6 +1,6 @@
 'use strict';
 
-var Meteor = require('../Meteor');
+var Meteor = require('../actors/Meteor');
 
 module.exports = {
     name: 'Meteor Wave A',

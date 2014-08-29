@@ -1,10 +1,10 @@
 'use strict';
 
-var createSubClass = require('./util/create_subclass')
-    , collisionService = require('./collisions')
-    , hudService = require('./hud')
-    , Actor = require('./abstract/Actor')
-    , sprites = require('./sprites')
+var createSubClass = require('../util/create_subclass')
+    , collisionService = require('../collisions')
+    , hudService = require('../hud')
+    , Actor = require('../abstract/Actor')
+    , sprites = require('../sprites')
     , Container = createjs.Container;
 
 
