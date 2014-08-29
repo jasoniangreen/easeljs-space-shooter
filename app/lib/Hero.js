@@ -6,6 +6,7 @@ var createSubClass = require('./util/create_subclass')
     , hudService = require('./hud')
     , Actor = require('./abstract/Actor')
     , config = require('./config')
+    , sprites = require('./sprites')
     , collisionService = require('./collisions');
 
 var keyActions = {
@@ -41,11 +42,6 @@ function Hero$initialize(x, y) {
 function Hero$takeDamage(damage) {
     this.alpha = 0.5;
     this.health -= damage;
-
-    hudService.dispatchEvent({
-        type: 'set', 
-        data: { property: 'health', value: this.health}
-    });
 
     var self = this;
     setTimeout(function() {
@@ -104,9 +100,7 @@ function _prepareProperties(x, y) {
 
 
 function _prepareBody() {
-    this.body = new createjs.Bitmap('img/hero.png');
-    this.body.x = -50;
-    this.body.y = -37;
+    this.body = sprites.createSprite('hero');
     this.addChild(this.body);
 
     var data = {

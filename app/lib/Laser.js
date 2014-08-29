@@ -2,6 +2,7 @@
 
 var createSubClass = require('./util/create_subclass')
     , collisionService = require('./collisions')
+    , sprites = require('./sprites')
     , Actor = require('./abstract/Actor');
 
 var BULLET_SPEED = 35
@@ -20,9 +21,8 @@ function Laser$initialize(x, y, rotation) {
     this.name = 'laser';
     this.rotation = rotation;
 
-    this.body = new createjs.Bitmap('img/laser.png');
-    this.body.x = -4;
-    this.body.y = -2;
+    this.body = sprites.createSprite('laser1');
+    this.body.y = 20; // need to get this value dynamically
     this.addChild(this.body);
 
     this.lifetime = 0;

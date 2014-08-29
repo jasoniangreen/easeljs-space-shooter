@@ -53,6 +53,13 @@ function takeDamage(damage) {
         var self = data.self;
         if (self) {
             self.takeDamage && self.takeDamage(damage);
+            if (self.name == 'hero') {
+                hudService.dispatchEvent({
+                    type: 'set', 
+                    data: { property: 'health', value: self.health}
+                });
+            }
+
             if (self.health <= 0) {
                 self.destroy && self.destroy();
                 var destroyedFunc = rules.destroyed[self.name];

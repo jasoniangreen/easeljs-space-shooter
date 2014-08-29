@@ -4,6 +4,7 @@ var createSubClass = require('./util/create_subclass')
     , collisionService = require('./collisions')
     , hudService = require('./hud')
     , Actor = require('./abstract/Actor')
+    , sprites = require('./sprites')
     , Container = createjs.Container;
 
 
@@ -25,9 +26,7 @@ function Meteor$initialize(x, y) {
     this.speedX = Math.sin((this.direction) * Math.PI / -180);
     this.speedY = Math.cos((this.direction) * Math.PI / -180);
 
-    this.body = new createjs.Bitmap('img/meteor.png');
-    this.body.x = -49;
-    this.body.y = -48;
+    this.body = sprites.createSprite('meteor1');
     this.addChild(this.body);
 
     collisionService.addActor(this, 'circle', {radius: 48});
