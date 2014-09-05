@@ -47,8 +47,12 @@ A Brief Overview - in progress
 
 * [actions.js](#) - Keeps a map of all currently pressed keys and the mouse position, to be used during the `tick` event, rather than setting up key event listeners manually.
 
-* [abstract/Actor.js](#) - The base class that all game objects should inherit from. May be worthwhile creating some more base classes to manage all the objects that can take damage, or all enemies. It may be better, however, to manage this with mixins and the decorator pattern.
+* [abstract/](#) - Abstract classes.
 
-* [actors/Hero.js](#) - The Hero is the main controllable game object. It has health, takes damage, fires lasers, and is responsible for it's own movement, sprites, animation and firing.
+  * [abstract/Actor.js](#) - The base class that all game objects should inherit from. May be worthwhile creating some more base classes to manage all the objects that can take damage, or all enemies. It may be better, however, to manage this with mixins and the decorator pattern.
 
-* [actors/Meteor.js](#) - Meteors are setup with an initial direction and rotation. They move at a constant speed in that direction, and are an obstacle for the Hero. Meteors are with points when destroyed, but this logic is contained within the [rules.js](#) module.
+* [actors/](#) - All game objects, these inherit from Actor class.
+
+  * [actors/Hero.js](#) - The Hero is the main controllable game object. It has health, takes damage, fires lasers, and is responsible for it's own movement, sprites, animation and firing.
+
+  * [actors/Meteor.js](#) - Meteors are setup with an initial direction and rotation. They move at a constant speed in that direction, and are an obstacle for the Hero. Meteors are with points when destroyed, but this logic is contained within the [rules.js](#) module.
