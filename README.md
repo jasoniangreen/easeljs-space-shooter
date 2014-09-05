@@ -30,8 +30,8 @@ grunt
 navigate to localhost:9001 in a modern browser
 
 
-A Brief Overview - in progress
-------------------------------
+A Brief Overview
+----------------
 
 * [main.js](https://github.com/jasoniangreen/easeljs-space-shooter/blob/master/app/lib/main.js) - The main file that brings everything together. It is responsible for loading and initialising the hud, rules, actions, setting up the camera/background, and building and resetting the levels.
 
