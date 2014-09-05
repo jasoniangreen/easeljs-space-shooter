@@ -2,11 +2,26 @@
 
 var A = require('./wave_a')
     , B = require('./wave_b')
+    , T = require('./wave_test')
     , H = require('./home');
 
 module.exports = [
     {
-        name: 'Gamma Quadrant',
+        name: 'The Morthanveld Nest',
+        cellWidth: 500,
+        cellHeight: 500,
+        data: [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,T,H,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ]
+    },
+    {
+        name: 'Idiran Space',
         cellWidth: 500,
         cellHeight: 500,
         data: [
@@ -20,7 +35,7 @@ module.exports = [
         ]
     },
     {
-        name: 'Delta Quadrant',
+        name: 'The Affront',
         cellWidth: 500,
         cellHeight: 500,
         data: [

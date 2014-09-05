@@ -3,7 +3,6 @@
 var createSubClass = require('../util/create_subclass')
     , actionService = require('../actions')
     , Laser = require('./Laser')
-    , hudService = require('../hud')
     , Actor = require('../abstract/Actor')
     , config = require('../config')
     , sprites = require('../sprites')
@@ -41,11 +40,9 @@ function Hero$initialize(x, y) {
 
 function Hero$takeDamage(damage) {
     this.alpha = 0.5;
-    this.health -= damage;
-
     var self = this;
     setTimeout(function() {
-        self.alpha = 1;
+        if (self) self.alpha = 1;
     }, 2000);
 }
 

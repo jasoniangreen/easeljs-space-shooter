@@ -15,10 +15,10 @@ module.exports = createSubClass(Actor, 'Laser', {
 });
 
 
-function Laser$initialize(x, y, rotation) {
+function Laser$initialize(x, y, rotation, type) {
     Actor.prototype.initialize.apply(this, arguments);
     
-    this.name = 'laser';
+    this.name = type == 'enemy' ? 'elaser' : 'laser';
     this.rotation = rotation;
 
     this.body = sprites.createSprite('laser1');

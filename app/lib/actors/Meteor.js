@@ -2,7 +2,7 @@
 
 var createSubClass = require('../util/create_subclass')
     , collisionService = require('../collisions')
-    , hudService = require('../hud')
+    , rules = require('../rules')
     , Actor = require('../abstract/Actor')
     , sprites = require('../sprites')
     , Container = createjs.Container;
@@ -33,6 +33,11 @@ function Meteor$initialize(x, y, size) {
     try { var radius = this.body.spriteSheet.getFrame(this.body.currentFrame).regX } catch(e) {}
 
     collisionService.addActor(this, 'circle', {radius: radius || 20});
+
+    rules.events.dispatchEvent({
+        type: 'registerenemy', 
+        data: {self: this}
+    });
 }
 
 
@@ -46,6 +51,7 @@ function Meteor$tick() {
 function Meteor$destroy(event) {
     var newSize = this.size - 1;
     if (newSize) {
+        // TODO: investigate exeption being thrown here.
         var meteor1 = new Meteor(this.x, this.y, newSize);
         this.parent.addChild(meteor1);
         var meteor2 = new Meteor(this.x, this.y, newSize);

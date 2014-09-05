@@ -4,6 +4,7 @@ var domReady = require('./util').domReady
     , Hero = require('./actors/Hero')
     , actionService = require('./actions')
     , levels = require('./levels')
+    , rules = require('./rules')
     , hud = require('./hud')
     , collisionService = require('./collisions')
     , config = require('./config')
@@ -26,15 +27,26 @@ domReady(function init() {
     canvas = stage.canvas;
     actionService.init(window, stage);
     hud.init(_W, _H);
+    rules.events.on('resetgame', onResetGame);
     prepareWorld();
 
     c.Ticker.addEventListener('tick', function() {
         cameraMove();
         updateBackground();
-        collisionService.broadcastCollisions();
+        var collisions = collisionService.process();
+        rules.executeCollisions(collisions);
         stage.update();
     });
 });
+
+
+function onResetGame(event) {
+    stage.removeChild(world);
+    // TODO: reset hud
+    if (event.data.isWin)
+        currentLevel++;
+    prepareWorld();
+}
 
 
 function prepareWorld() {
@@ -44,6 +56,9 @@ function prepareWorld() {
     stage.addChild(hud.get());
 
     var level = levels[currentLevel];
+    
+    if (!level) return console.info('You win the game!');
+
     wConfig.height = level.data.length * level.cellHeight;
     wConfig.width = level.data[0].length * level.cellWidth;
 

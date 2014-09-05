@@ -10,6 +10,7 @@ var sprites = module.exports = {
 		'hero': 'playerShip1_orange',
 		'meteor2': 'meteorBrown_big4',
 		'meteor1': 'meteorBrown_med1',
+		'saucer': 'ufoRed',
 		'laser1': 'laserRed05'
 	}
 };

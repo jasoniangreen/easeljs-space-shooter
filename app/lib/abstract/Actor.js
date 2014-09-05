@@ -36,9 +36,9 @@ function Actor$initialize(x, y) {
 
 function Actor$destroy() {
     if (this.parent) {
-        hudService.dispatchEvent({
+        rules.events.dispatchEvent({
             type: 'destroyed', 
-            data: { obj: this }
+            data: { self: this }
         });
         collisionService.removeActor(this);
         this.parent.removeChild(this);
@@ -61,9 +61,5 @@ function Actor$tick() {
 
 
 function Actor$collision(event) {
-    try {
-        var ruleFunc = rules.collisions[event.data.self.name]
-                                       [event.data.other.name];
-    } catch(e) {}
-    typeof ruleFunc == 'function' && ruleFunc(event.data);
+    // To be implemented in subclass
 }

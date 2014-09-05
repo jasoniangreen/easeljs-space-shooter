@@ -46,7 +46,7 @@ function onUpdate(event) {
     var property = event.data.property;
     var value = event.data.value;
 
-    if (property && value) {
+    if (property && typeof value != 'undefined') {
         values[property] += value;
         isDirty = true;
     }
@@ -59,7 +59,7 @@ function onSet(event) {
     var property = event.data.property;
     var value = event.data.value;
 
-    if (property && value) {
+    if (property && typeof value != 'undefined') {
         values[property] = value;
         isDirty = true;
     }

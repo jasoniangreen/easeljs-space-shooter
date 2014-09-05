@@ -4,7 +4,8 @@ var EaselEvent = createjs.Event;
 
 
 var actors = []
-    , colliders = [];
+    , colliders = []
+    , currentCollisions = [];
 
 actors.name = 'actors array';
 colliders.name = 'colliders array';
@@ -15,7 +16,8 @@ module.exports = {
     removeActor: collection_remove.bind(actors),
     addCollider: collection_add.bind(colliders),
     removeCollider: collection_remove.bind(colliders),
-    broadcastCollisions: broadcastCollisions
+    process: process,
+    broadcast: broadcast
 };
 
 
@@ -40,8 +42,8 @@ function collection_remove(obj) {
 }
 
 
-function broadcastCollisions() {
-    var collisions = [];
+function process() {
+    currentCollisions = [];
     actors.forEach(function(obj1) {
         actors.forEach(function(obj2) {
             var obj1Info = obj1._collisionInfo;
@@ -62,7 +64,7 @@ function broadcastCollisions() {
                         self: obj1,
                         other: obj2
                     };
-                    collisions.push({
+                    currentCollisions.push({
                         target: obj1,
                         event: collisionEvent
                     });
@@ -71,7 +73,12 @@ function broadcastCollisions() {
         });
     });
 
-    collisions.forEach(function(info) {
+    return currentCollisions;
+}
+
+
+function broadcast() {
+    currentCollisions.forEach(function(info) {
         info.target.dispatchEvent(info.event);
     });
 }
