@@ -35,11 +35,7 @@ A Brief Overview - in progress
 
 * [main.js](#) - The main file that brings everything together. It is responsible for loading and initialising the hud, rules, actions, setting up the camera/background, and building and resetting the levels.
 
-* [rules.js](#) - The file where all high level game logic should go. Anything that concerns the interaction of game objects, collisions, game win/loss conditions and the monitoring game state. Individual game objects should be concerned with their own local rules. 
-
-For example: The Meteor doesn't know which collisions will destroy it, but it knows that when it is destroyed, it should create 2 smaller Meteors.
-
-Collision logic is held at the top of this module in the form of an array 'matrix'. Object types are across the top as strings, and their other object in the collision is down the left side. Using this matrix you can see all the various rules for every collision possibility.
+* [rules.js](#) - The file where all high level game logic should go. Anything that concerns the interaction of game objects, collisions, game win/loss conditions and the monitoring game state. Individual game objects should be concerned with their own local rules. For example: The Meteor doesn't know which collisions will destroy it, but it knows that when it is destroyed, it should create 2 smaller Meteors. Collision logic is held at the top of this module in the form of an array 'matrix'. Object types are across the top as strings, and their other object in the collision is down the left side. Using this matrix you can see all the various rules for every collision possibility.
 
 * [sprite.js](#) - This module contains all of the sprite data for the entire [SpaceShooterRedux](http://www.kenney.nl) spritesheet. You can add any new sprite by adding it to the names map at the top of the module and calling `sprite.createSprite('name')` in your class definition.
 
