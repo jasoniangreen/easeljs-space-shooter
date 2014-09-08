@@ -16,7 +16,7 @@ function init() {
 
 var collisions = {
     selves:   [   'meteor',     'hero',    'laser',   'elaser', 'modifier', 'saucer'  ],
- /* others */
+ // others
     meteor:   [           ,  takeDmg20,    destroy,           ,                       ],
     hero:     [    destroy,           ,           ,    destroy,    destroy, takeDmg20 ],
     laser:    [    destroy,           ,           ,           ,           , takeDmg20 ],

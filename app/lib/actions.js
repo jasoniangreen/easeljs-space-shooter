@@ -26,8 +26,6 @@ function actions_init(win, stage2) {
 
     win.addEventListener('keydown', onKeyDown);
     win.addEventListener('keyup', onKeyUp);
-    // win.addEventListener('mousedown', onMouseDown);
-    // win.addEventListener('mouseup', onMouseUp);
     win.addEventListener('mousemove', onMouseMove);
 }
 
