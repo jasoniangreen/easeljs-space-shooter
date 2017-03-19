@@ -14,7 +14,6 @@ Install node and npm.
 Then;
 ```
 npm install -g bower
-npm install -g grunt
 ```
 Then from the project folder
 ```
@@ -24,7 +23,7 @@ npm install
 
 ### Run ###
 ```
-grunt
+npm start
 ```
 
 navigate to localhost:9001 in a modern browser.
